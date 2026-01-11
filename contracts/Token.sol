@@ -48,7 +48,7 @@ contract Token is ERC20, ERC20Burnable, Ownable, ReentrancyGuard {
     address public pairAddress;
     
     // Security: Prevent tax manipulation
-    bool public taxLocked = false;
+    bool public taxLocked = true; // Locked by default - no surprises
     
     // Security: Maximum treasury cap (prevents DoS)
     uint256 public constant MAX_TREASURY = 10000000 * 10**18; // 10M max
@@ -106,6 +106,11 @@ contract Token is ERC20, ERC20Burnable, Ownable, ReentrancyGuard {
         isExcludedFromTax[_liquidityWallet] = true;
         
         // Mint total supply to owner
+        
+        // Lock tax permanently by default - no surprises, full credibility
+        taxLocked = true;
+        emit TaxLocked();
+        
         _mint(msg.sender, _totalSupply);
     }
     
@@ -293,6 +298,8 @@ contract Token is ERC20, ERC20Burnable, Ownable, ReentrancyGuard {
     /**
      * @dev Lock tax permanently (owner only, irreversible)
      * Security: Prevents future tax manipulation
+     * NOTE: Tax is already locked by default in constructor
+     * This function exists for backwards compatibility but will always revert
      */
     function lockTax() external onlyOwner {
         require(!taxLocked, "Tax already locked");

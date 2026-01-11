@@ -184,13 +184,16 @@ describe("Token", function () {
   });
 
   describe("Owner Functions", function () {
-    it("Should allow owner to update transaction tax", async function () {
-      await token.setTransactionTax(400); // 4%
-      expect(await token.transactionTax()).to.equal(400);
+    it("Should NOT allow owner to update transaction tax (tax is locked by default)", async function () {
+      // Tax is locked by default from deployment - cannot be changed
+      await expect(token.setTransactionTax(400)).to.be.revertedWith("Tax is locked and cannot be changed");
+      expect(await token.transactionTax()).to.equal(300); // Still 3%
+      expect(await token.taxLocked()).to.equal(true); // Confirmed locked
     });
 
-    it("Should revert when tax exceeds maximum", async function () {
-      await expect(token.setTransactionTax(600)).to.be.revertedWith("Tax out of valid range");
+    it("Should revert when trying to change tax (locked by default)", async function () {
+      // Tax is locked, so any attempt to change should revert
+      await expect(token.setTransactionTax(600)).to.be.revertedWith("Tax is locked and cannot be changed");
     });
 
     it("Should allow owner to update wallets", async function () {

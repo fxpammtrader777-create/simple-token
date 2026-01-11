@@ -38,7 +38,7 @@ Simple Token is a fully transparent, secure, and automated ERC-20 token built on
 - **100% Transparent**: Open-source code, verified contracts, public treasury
 - **Hack-Proof Security**: Protection against MEV bots, flash loans, reentrancy, and wallet draining attacks
 - **Automated Deflationary Mechanism**: Automatic buyback and burn when treasury threshold is reached
-- **Fixed Tax Structure**: 3% transaction tax (can be locked permanently, no modifications after lock)
+- **Fixed Tax Structure**: 3% transaction tax (**PERMANENTLY LOCKED by default** - locked from deployment, cannot be changed)
 - **Safe for All Trading**: Scalpers, bots, day traders, and holders all welcome
 - **No Manual Intervention**: Fully automated buyback/burn, no owner control needed
 
@@ -931,12 +931,23 @@ function setTransactionTax(uint256 _tax) external onlyOwner
 **Timelock**: Can be enabled for delayed execution
 
 ##### `lockTax()`
+
+**⚠️ CRITICAL: This function permanently locks the tax. It is IRREVERSIBLE!**
+
 ```solidity
 function lockTax() external onlyOwner
 ```
+
 **Purpose**: Permanently lock tax rate  
 **Effect**: Irreversible, tax cannot be changed  
 **Security**: Prevents future tax manipulation
+
+**IMPORTANT**: 
+- Tax is **LOCKED BY DEFAULT** - `taxLocked = true` from deployment
+- Tax is automatically locked in the constructor
+- **NO ACTION REQUIRED** - tax is permanently locked from day one
+- Tax is permanently locked at 3% from deployment
+- **NO SURPRISES** - tax cannot be changed, ever
 
 ##### `setBuybackThreshold(uint256 _threshold)`
 ```solidity
