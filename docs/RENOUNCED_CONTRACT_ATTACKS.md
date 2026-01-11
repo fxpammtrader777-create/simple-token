@@ -118,7 +118,7 @@ function emergencyWithdraw() external {
 
 ### Most Likely Scenarios:
 
-#### Scenario 1: Approval Abuse (80% likely)
+#### Scenario 1: Approval Abuse (80% probability - attack scenario, not security rating)
 1. You approved the contract to spend tokens
 2. Contract had hidden function using approvals
 3. Attacker called function → drained your approved tokens

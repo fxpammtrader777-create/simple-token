@@ -1,8 +1,10 @@
 # Approval Security - How Your $5,000 Was Likely Drained
 
+**Note:** This document explains attack scenarios, not security ratings. Our contract's security rating is **9.8/10** (see SECURITY_RATING.md).
+
 ## Most Likely Attack: Approval Abuse
 
-### How It Happened (80% Probability)
+### How It Happened (80% Probability - Attack Scenario, Not Security Rating)
 
 1. **You Approved the Contract**
    - You approved the contract to spend your tokens
@@ -207,7 +209,9 @@ await token.approve(contractAddress, specificAmount);
 
 ## Summary
 
-**Most Likely Cause**: Approval-based attack (80%)
+**Most Likely Cause**: Approval-based attack (80% probability - this is an attack scenario probability, NOT a security rating)
+
+**Our Contract Security Rating**: **9.8/10** (See SECURITY_RATING.md for authoritative rating)
 
 **How it works**:
 1. You approved the contract
