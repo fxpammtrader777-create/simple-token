@@ -1,0 +1,139 @@
+'npx hardhat clean' running (wd: C:\Users\Smonr\Desktop\tokoen\simple-token)
+'npx hardhat clean --global' running (wd: C:\Users\Smonr\Desktop\tokoen\simple-token)
+'npx hardhat compile --force' running (wd: C:\Users\Smonr\Desktop\tokoen\simple-token)
+INFO:Detectors:
+Token._scheduleTimelock(bytes32) (contracts/Token.sol#625-627) uses a dangerous strict equality:
+	- require(bool,string)(timelock[operationId] == 0,Operation already scheduled) (contracts/Token.sol#626)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+INFO:Detectors:
+Token._distributeTax(address,uint256).excessAmount (contracts/Token.sol#324) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+INFO:Detectors:
+Token.constructor(string,string,uint256,address,address,address)._name (contracts/Token.sol#172) shadows:
+	- ERC20._name (node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol#36) (state variable)
+Token.constructor(string,string,uint256,address,address,address)._symbol (contracts/Token.sol#173) shadows:
+	- ERC20._symbol (node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol#37) (state variable)
+Token.constructor(string,string,uint256,address,address,address)._totalSupply (contracts/Token.sol#174) shadows:
+	- ERC20._totalSupply (node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol#34) (state variable)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing
+INFO:Detectors:
+Ownable2Step.transferOwnership(address).newOwner (node_modules/@openzeppelin/contracts/access/Ownable2Step.sol#43) lacks a zero-check on :
+		- _pendingOwner = newOwner (node_modules/@openzeppelin/contracts/access/Ownable2Step.sol#44)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+INFO:Detectors:
+Token._distributeTax(address,uint256) (contracts/Token.sol#302-379) uses timestamp for comparisons
+	Dangerous comparisons:
+	- treasury >= _buybackThreshold && block.timestamp >= _lastBuybackTime + BUYBACK_COOLDOWN (contracts/Token.sol#374-375)
+Token._buybackAndBurn() (contracts/Token.sol#385-404) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(block.timestamp >= lastBuybackTime + BUYBACK_COOLDOWN,Buyback cooldown active) (contracts/Token.sol#389-392)
+Token._scheduleTimelock(bytes32) (contracts/Token.sol#625-627) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(timelock[operationId] == 0,Operation already scheduled) (contracts/Token.sol#626)
+Token._executeTimelock(bytes32) (contracts/Token.sol#633-638) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(timelock[operationId] != 0,Operation not scheduled) (contracts/Token.sol#634)
+	- require(bool,string)(block.timestamp >= timelock[operationId],Timelock not expired) (contracts/Token.sol#635)
+Token.cancelTimelock(bytes32) (contracts/Token.sol#644-648) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(timelock[operationId] != 0,Operation not scheduled) (contracts/Token.sol#645)
+Token.isTimelockReady(bytes32) (contracts/Token.sol#674-676) uses timestamp for comparisons
+	Dangerous comparisons:
+	- timelock[operationId] != 0 && block.timestamp >= timelock[operationId] (contracts/Token.sol#675)
+Token.isBuybackReady() (contracts/Token.sol#699-702) uses timestamp for comparisons
+	Dangerous comparisons:
+	- treasury >= buybackThreshold && block.timestamp >= lastBuybackTime + BUYBACK_COOLDOWN (contracts/Token.sol#700-701)
+Token.getBuybackCooldownRemaining() (contracts/Token.sol#708-714) uses timestamp for comparisons
+	Dangerous comparisons:
+	- block.timestamp >= cooldownEnd (contracts/Token.sol#710)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+INFO:Detectors:
+5 different versions of Solidity are used:
+	- Version constraint ^0.8.20 is used by:
+		-^0.8.20 (node_modules/@openzeppelin/contracts/access/Ownable.sol#4)
+		-^0.8.20 (node_modules/@openzeppelin/contracts/access/Ownable2Step.sol#4)
+		-^0.8.20 (node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol#4)
+		-^0.8.20 (node_modules/@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol#4)
+		-^0.8.20 (node_modules/@openzeppelin/contracts/utils/Context.sol#4)
+		-^0.8.20 (node_modules/@openzeppelin/contracts/utils/ReentrancyGuard.sol#4)
+	- Version constraint >=0.8.4 is used by:
+		->=0.8.4 (node_modules/@openzeppelin/contracts/interfaces/draft-IERC6093.sol#3)
+	- Version constraint >=0.4.16 is used by:
+		->=0.4.16 (node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol#4)
+	- Version constraint >=0.6.2 is used by:
+		->=0.6.2 (node_modules/@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol#4)
+	- Version constraint 0.8.28 is used by:
+		-0.8.28 (contracts/Token.sol#2)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#different-pragma-directives-are-used
+INFO:Detectors:
+Version constraint ^0.8.20 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- VerbatimInvalidDeduplication
+	- FullInlinerNonExpressionSplitArgumentEvaluationOrder
+	- MissingSideEffectsOnSelectorAccess.
+It is used by:
+	- ^0.8.20 (node_modules/@openzeppelin/contracts/access/Ownable.sol#4)
+	- ^0.8.20 (node_modules/@openzeppelin/contracts/access/Ownable2Step.sol#4)
+	- ^0.8.20 (node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol#4)
+	- ^0.8.20 (node_modules/@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol#4)
+	- ^0.8.20 (node_modules/@openzeppelin/contracts/utils/Context.sol#4)
+	- ^0.8.20 (node_modules/@openzeppelin/contracts/utils/ReentrancyGuard.sol#4)
+Version constraint >=0.8.4 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- FullInlinerNonExpressionSplitArgumentEvaluationOrder
+	- MissingSideEffectsOnSelectorAccess
+	- AbiReencodingHeadOverflowWithStaticArrayCleanup
+	- DirtyBytesArrayToStorage
+	- DataLocationChangeInInternalOverride
+	- NestedCalldataArrayAbiReencodingSizeValidation
+	- SignedImmutables.
+It is used by:
+	- >=0.8.4 (node_modules/@openzeppelin/contracts/interfaces/draft-IERC6093.sol#3)
+Version constraint >=0.4.16 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor_0.4.x
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector.
+It is used by:
+	- >=0.4.16 (node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol#4)
+Version constraint >=0.6.2 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- MissingSideEffectsOnSelectorAccess
+	- AbiReencodingHeadOverflowWithStaticArrayCleanup
+	- DirtyBytesArrayToStorage
+	- NestedCalldataArrayAbiReencodingSizeValidation
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- MissingEscapingInFormatting
+	- ArraySliceDynamicallyEncodedBaseType
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow.
+It is used by:
+	- >=0.6.2 (node_modules/@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol#4)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+INFO:Detectors:
+Parameter Token.setTransactionTax(uint256)._tax (contracts/Token.sol#420) is not in mixedCase
+Parameter Token.executeSetTransactionTax(uint256)._tax (contracts/Token.sol#440) is not in mixedCase
+Parameter Token.setMarketingWallet(address)._wallet (contracts/Token.sol#464) is not in mixedCase
+Parameter Token.executeSetMarketingWallet(address)._wallet (contracts/Token.sol#484) is not in mixedCase
+Parameter Token.setLiquidityWallet(address)._wallet (contracts/Token.sol#498) is not in mixedCase
+Parameter Token.executeSetLiquidityWallet(address)._wallet (contracts/Token.sol#518) is not in mixedCase
+Parameter Token.setPairAddress(address)._pair (contracts/Token.sol#532) is not in mixedCase
+Parameter Token.setBuybackThreshold(uint256)._threshold (contracts/Token.sol#569) is not in mixedCase
+Parameter Token.setTimelockDelay(uint256)._delay (contracts/Token.sol#654) is not in mixedCase
+Parameter Token.toggleTimelock(bool)._enabled (contracts/Token.sol#664) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+INFO:Slither:. analyzed (12 contracts with 100 detectors), 29 result(s) found
