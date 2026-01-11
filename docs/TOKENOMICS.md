@@ -1,12 +1,12 @@
-# Tokenomics - Simple Token
+# Tokenomics - Bird Token
 
 ## Overview
 
-Simple Token is designed with sustainable tokenomics that create value for holders while generating revenue for project development and marketing.
+Bird Token is designed with sustainable tokenomics that create value for holders while generating revenue for project development and marketing.
 
 ## Token Supply
 
-**Total Supply**: 10,000,000 SIMPLE tokens
+**Total Supply**: 10,000,000 BIRD tokens
 
 This supply was chosen for:
 - Psychological appeal (higher per-token price)
@@ -15,19 +15,30 @@ This supply was chosen for:
 
 ## Distribution
 
-### Initial Distribution
+### How Tokens Are Actually Distributed
+
+**On Deployment:**
+- **100% of tokens (10,000,000 BIRD) are minted to the owner**
+- The contract does NOT automatically distribute tokens
+- Owner receives all tokens and must distribute them manually
+
+### Recommended Distribution Plan
+
+After deployment, the owner should distribute tokens according to this plan:
 
 | Allocation | Percentage | Amount | Purpose |
 |------------|-----------|--------|---------|
-| Treasury | 30% | 3,000,000 | Vested, locked for 6 months |
-| Public Sale | 50% | 5,000,000 | Fair launch distribution |
-| Liquidity | 20% | 2,000,000 | Initial DEX liquidity (locked) |
+| Treasury | 30% | 3,000,000 | For buyback/burn mechanism (stays in contract treasury) |
+| Public Sale | 50% | 5,000,000 | Fair launch distribution to community |
+| Liquidity | 20% | 2,000,000 | Initial DEX liquidity (should be locked) |
 
-### Treasury Lock
-
-- **Duration**: 6 months from launch
-- **Purpose**: Build trust, prevent rug pulls
-- **After unlock**: Used for development, marketing, strategic partnerships
+**Important Notes:**
+- ⚠️ **This is a RECOMMENDED plan, not automatic**
+- ⚠️ **Owner must manually transfer tokens after deployment**
+- ⚠️ **No automatic vesting or locking in the contract**
+- ⚠️ **Owner controls all tokens until distributed**
+- ✅ **For transparency, owner should distribute as planned**
+- ✅ **Liquidity should be locked using a locking service**
 
 ## Transaction Tax
 
