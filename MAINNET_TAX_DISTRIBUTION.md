@@ -154,7 +154,7 @@ Transfer: 10,000 BIRD
 - **Default Tax:** 3% (300 basis points)
 - **Maximum Tax:** 5% (500 basis points)
 - **Minimum Tax:** 0% (0 basis points)
-- **Owner Can Change:** Yes (until locked)
+- **Owner Can Change:** ❌ **NO** - Tax is **PERMANENTLY LOCKED** by default from deployment
 - **Can Be Locked:** Yes (irreversible)
 
 ### **Distribution Percentages (Fixed):**
@@ -247,7 +247,7 @@ Original: 10,000 BIRD
 
 ### **Mainnet Tax Distribution:**
 
-**Transaction Tax:** 3% (default, can be changed up to 5%)
+**Transaction Tax:** 3% (**PERMANENTLY LOCKED** - cannot be changed)
 
 **Distribution:**
 - **40% → Liquidity Wallet** (1.2% of transfer)
@@ -269,7 +269,7 @@ Original: 10,000 BIRD
 ## 📝 Important Notes
 
 1. **Distribution percentages are FIXED** - cannot be changed after deployment
-2. **Tax rate can be changed** - owner can adjust 0-5% (until locked)
+2. **Tax rate is PERMANENTLY LOCKED** - locked at 3% from deployment, cannot be changed
 3. **Treasury threshold can be changed** - owner can adjust (max 10M)
 4. **Buyback is automatic** - triggers when threshold reached
 5. **Cooldown protection** - 1 hour between buybacks (prevents front-running)
