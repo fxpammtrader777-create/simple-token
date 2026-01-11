@@ -1,10 +1,10 @@
-# Simple Token - Profitable ERC-20 Token
+# Bird Token - Profitable ERC-20 Token
 
 A simple, transparent, and profitable ERC-20 token built on Polygon with transaction taxes, automatic buyback/burn, and sustainable tokenomics.
 
 ## 🎯 Overview
 
-Simple Token is designed to be a legitimate, profitable token with:
+Bird Token is designed to be a legitimate, profitable token with:
 - **3% transaction tax** (configurable, max 5%)
 - **Automatic buyback and burn** when treasury threshold is reached
 - **Transparent tokenomics** with clear distribution

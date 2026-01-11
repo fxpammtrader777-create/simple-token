@@ -139,8 +139,17 @@ Applied to all buys and sells, except:
 
 ### For Holders
 - **Tax on Sells**: 3% tax applies to all sells
-- **Market Risk**: Price can go up or down
+- **Market Risk**: Price can go up or down (controlled by market forces, not by owner or contract)
 - **Liquidity Risk**: Low liquidity can cause slippage
+
+**Price Control**: 
+- **No one directly controls the price** - it's determined by supply and demand on the DEX (QuickSwap)
+- **Market forces** (buyers and sellers) set the price
+- **Contract mechanisms** can only **influence** price indirectly:
+  - Buyback/burn reduces supply (can increase price if demand stays constant)
+  - Liquidity addition (40% of taxes) can stabilize price
+  - Transaction taxes affect trading behavior
+- **Owner cannot manipulate price** - no functions exist to directly set or control price
 
 ### For Project
 - **Regulatory Risk**: Crypto regulations may change
@@ -157,22 +166,54 @@ Applied to all buys and sells, except:
 
 ## Vesting Schedule
 
-### Treasury (30%)
-- **Lock Period**: 6 months
-- **Unlock**: Linear over 12 months after lock
-- **Total Vesting**: 18 months from launch
+**⚠️ IMPORTANT: The contract does NOT have automatic vesting or locking mechanisms built in.**
 
-### Public Sale (50%)
-- **Immediate**: Available at launch
-- **No Lock**: Free to trade
+The contract automatically distributes tokens on deployment:
+- **30% to contract treasury** (stays in contract, used for buyback/burn)
+- **20% to liquidity wallet** (immediately available)
+- **50% to public sale wallet** (immediately available)
 
-### Liquidity (20%)
-- **Locked**: Permanently locked on DEX
-- **Purpose**: Price stability
+### How Vesting Works (Manual Process)
+
+Since the contract doesn't enforce vesting, the following is a **recommended plan** that should be implemented manually:
+
+#### Treasury (30%)
+- **Contract Behavior**: 30% (3,000,000 BIRD) is automatically minted to the contract treasury on deployment
+- **Purpose**: Used for automatic buyback and burn mechanism
+- **Access**: Only accessible via `withdrawTreasury()` function (owner only, with timelock if enabled)
+- **Recommended Lock**: Owner should NOT withdraw from treasury (it's meant for buyback/burn)
+- **Note**: Treasury is protected by contract - owner can withdraw, but this defeats the purpose of the buyback mechanism
+
+#### Public Sale (50%)
+- **Contract Behavior**: 50% (5,000,000 BIRD) is automatically minted to public sale wallet on deployment
+- **Immediate Availability**: Tokens are immediately available to the public sale wallet
+- **No Contract Lock**: Contract does not lock these tokens
+- **Recommended Practice**: Public sale wallet should distribute tokens according to sale schedule
+- **Manual Control**: The public sale wallet owner controls distribution timing
+
+#### Liquidity (20%)
+- **Contract Behavior**: 20% (2,000,000 BIRD) is automatically minted to liquidity wallet on deployment
+- **Immediate Availability**: Tokens are immediately available to the liquidity wallet
+- **No Contract Lock**: Contract does not lock these tokens
+- **Recommended Practice**: 
+  - Add liquidity to DEX (QuickSwap)
+  - **Lock LP tokens** using a third-party service (e.g., Team Finance, Unicrypt)
+  - This locks the liquidity provider tokens, not the BIRD tokens themselves
+- **Purpose**: Price stability through locked liquidity
+
+### Summary
+
+| Allocation | Contract Behavior | Manual Action Required |
+|------------|-------------------|------------------------|
+| **Treasury (30%)** | Automatically minted to contract | Owner should NOT withdraw (defeats buyback purpose) |
+| **Public Sale (50%)** | Automatically minted to public sale wallet | Wallet owner distributes according to sale schedule |
+| **Liquidity (20%)** | Automatically minted to liquidity wallet | Add to DEX, then lock LP tokens externally |
+
+**Key Point**: The contract ensures fair, automatic distribution (like Bitcoin), but vesting/locking must be handled manually or through external services (for LP tokens).
 
 ## Conclusion
 
-Simple Token's tokenomics are designed for:
+Bird Token's tokenomics are designed for:
 - **Sustainability**: Revenue from transaction taxes
 - **Value Creation**: Deflationary mechanism
 - **Transparency**: Open source and clear documentation

@@ -1,4 +1,4 @@
-# Roadmap - Simple Token
+# Roadmap - Bird Token
 
 ## Phase 1: Launch (Q1 2026) ✅
 
@@ -122,64 +122,6 @@ Roadmap will be updated quarterly with:
 - New milestones
 - Community input
 - Market adjustments
-
----
-
-## 🔒 Private Section - Future Development (Internal Reference)
-
-### Staking & Yield Farming Strategy
-
-**Status**: Planning Phase  
-**Reference Document**: `STAKING_YIELD_FARMING_STRATEGY.md`  
-**Principle**: Separate contract, no modifications to main Token.sol
-
-#### Recommended Approach: Hybrid Treasury + DeFi Model
-
-**Phase 1: Treasury-Based Staking (Post-Launch)**
-- Flexible staking pool: 5-10% APY (no lock period)
-- 30-day fixed-term pool: 15-20% APY
-- Rewards source: 25% of treasury allocation (sustainable, automatic)
-- Implementation: Separate Staking.sol contract
-- Timeline: 2-4 weeks after main token launch
-
-**Phase 2: Fixed-Term Expansion**
-- 90-day fixed-term pool: 25-35% APY
-- Early withdrawal penalties (optional)
-- Compound staking options
-
-**Phase 3: DeFi Yield Farming Integration**
-- Aave integration: 5-15% APY (lending)
-- QuickSwap LP staking: 20-50%+ APY (higher risk/reward)
-- Multiple protocol support for diversification
-
-#### Key Benefits
-- ✅ No main contract modifications (security maintained at 9.8/10)
-- ✅ Sustainable rewards from transaction volume
-- ✅ Multiple staking options (flexible to high APY)
-- ✅ Reduces circulating supply (increases holder retention)
-
-#### Integration with Tokenomics
-```
-Current: Transfer → 3% Tax → 30% to Treasury → Buyback & Burn
-With Staking: Transfer → 3% Tax → 30% to Treasury → 
-    ├─ 25% to Staking Rewards Pool
-    └─ 75% to Buyback & Burn (still effective)
-```
-
-#### Security Considerations
-- ReentrancyGuard on all functions
-- Input validation and overflow protection
-- Flash loan attack protection (cooldowns)
-- Emergency pause functions
-- Professional audit required before deployment
-
-#### Implementation Priority
-1. **Week 1-2**: Basic flexible staking (treasury-based)
-2. **Week 3-4**: Fixed-term pools (30/90 days)
-3. **Week 5-6**: DeFi yield farming integration
-4. **Week 7+**: Advanced features (compound, governance integration)
-
-**Note**: This is a private/internal planning section. Full strategy details available in `STAKING_YIELD_FARMING_STRATEGY.md`.
 
 ---
 

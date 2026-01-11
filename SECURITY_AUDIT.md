@@ -1,4 +1,4 @@
-# Security Audit - Simple Token Contract
+# Security Audit - Bird Token Contract
 
 ## Security Issues Found
 

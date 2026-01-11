@@ -1,4 +1,4 @@
-# Simple Token - Complete Technical White Paper
+# Bird Token - Complete Technical White Paper
 
 **Version:** 1.0  
 **Date:** January 2026  
@@ -31,7 +31,7 @@
 
 ## Executive Summary
 
-Simple Token is a fully transparent, secure, and automated ERC-20 token built on Polygon. Designed for all types of traders—from long-term holders to high-frequency scalpers and trading bots—the token implements comprehensive security measures to protect against all known attack vectors while maintaining a sustainable deflationary economic model.
+Bird Token is a fully transparent, secure, and automated ERC-20 token built on Polygon. Designed for all types of traders—from long-term holders to high-frequency scalpers and trading bots—the token implements comprehensive security measures to protect against all known attack vectors while maintaining a sustainable deflationary economic model.
 
 ### Key Features
 
@@ -44,7 +44,7 @@ Simple Token is a fully transparent, secure, and automated ERC-20 token built on
 
 ### Value Proposition
 
-Simple Token provides a secure, transparent trading environment where:
+Bird Token provides a secure, transparent trading environment where:
 - **Traders** can scalp, bot trade, or day trade safely
 - **Holders** benefit from automatic deflationary pressure
 - **Everyone** is protected from common DeFi exploits and scams
@@ -65,7 +65,7 @@ The DeFi space is plagued with security issues:
 
 ### Our Solution
 
-Simple Token addresses all these issues through:
+Bird Token addresses all these issues through:
 1. **Zero Malicious Functions**: No functions that can drain user wallets
 2. **Comprehensive Security**: Protection against all known attack vectors
 3. **Transparent Operations**: All code is open-source and verifiable
@@ -86,7 +86,7 @@ Simple Token addresses all these issues through:
 
 ### Smart Contract Overview
 
-Simple Token is built on Solidity 0.8.20 using OpenZeppelin's audited contracts:
+Bird Token is built on Solidity 0.8.20 using OpenZeppelin's audited contracts:
 
 ```solidity
 contract Token is ERC20, ERC20Burnable, Ownable, ReentrancyGuard {
@@ -145,8 +145,8 @@ Token
 
 | Property | Value |
 |----------|-------|
-| **Token Name** | Simple Token (configurable) |
-| **Token Symbol** | SIMPLE (configurable) |
+| **Token Name** | Bird Token |
+| **Token Symbol** | BIRD |
 | **Decimals** | 18 (standard ERC-20) |
 | **Total Supply** | 10,000,000 tokens (configurable at deployment) |
 | **Token Standard** | ERC-20 |
@@ -185,11 +185,30 @@ function burn(uint256 amount) public
 
 ### Initial Distribution
 
+**⚠️ IMPORTANT: How Tokens Are Actually Distributed**
+
+**On Deployment:**
+- **100% of tokens (10,000,000 BIRD) are minted to the owner**
+- The contract does NOT automatically distribute tokens
+- Owner receives all tokens and must distribute them manually
+- No automatic vesting or locking in the contract
+
+**Recommended Distribution Plan:**
+
+After deployment, the owner should distribute tokens according to this plan:
+
 | Allocation | Percentage | Amount (10M supply) | Purpose |
 |-----------|-----------|---------------------|---------|
-| **Public Sale** | 50% | 5,000,000 | Fair launch distribution |
-| **Treasury (Vested)** | 30% | 3,000,000 | Locked for 6 months, then vested |
-| **Liquidity Pool** | 20% | 2,000,000 | Initial DEX liquidity (locked) |
+| **Public Sale** | 50% | 5,000,000 | Fair launch distribution to community |
+| **Treasury** | 30% | 3,000,000 | For buyback/burn mechanism (stays in contract) |
+| **Liquidity Pool** | 20% | 2,000,000 | Initial DEX liquidity (should be locked) |
+
+**Critical Notes:**
+- ⚠️ **This is a RECOMMENDED plan, NOT automatic**
+- ⚠️ **Owner must manually transfer tokens after deployment**
+- ⚠️ **No automatic vesting or locking in the contract**
+- ⚠️ **Owner controls all tokens until distributed**
+- ✅ **For transparency, owner should distribute as planned**
 
 ### Transaction Tax Structure
 
@@ -1122,7 +1141,7 @@ function getBuybackCooldownRemaining() external view returns (uint256)
 
 ## Conclusion
 
-Simple Token represents a new standard for secure, transparent, and automated DeFi tokens. With comprehensive security measures protecting against all known attack vectors, and an automated deflationary mechanism that benefits all participants, Simple Token provides a safe trading environment for everyone—from long-term holders to high-frequency scalpers and trading bots.
+Bird Token represents a new standard for secure, transparent, and automated DeFi tokens. With comprehensive security measures protecting against all known attack vectors, and an automated deflationary mechanism that benefits all participants, Bird Token provides a safe trading environment for everyone—from long-term holders to high-frequency scalpers and trading bots.
 
 ### Key Takeaways
 
@@ -1141,7 +1160,7 @@ Simple Token represents a new standard for secure, transparent, and automated De
 - **Comprehensive security**: Industry-leading protection
 - **Professional audit**: Recommended for 10/10 rating
 
-**Simple Token: Secure, Transparent, Automated.**
+**Bird Token: Secure, Transparent, Automated.**
 
 ---
 

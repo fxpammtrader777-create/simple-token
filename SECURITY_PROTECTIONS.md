@@ -168,7 +168,7 @@
 
 ## Comparison to Industry Standards
 
-| Protection | Simple Token | Industry Standard | Status |
+| Protection | Bird Token | Industry Standard | Status |
 |------------|--------------|-------------------|--------|
 | ReentrancyGuard | ✅ | ✅ | ✅ Excellent |
 | Input Validation | ✅ | ✅ | ✅ Excellent |

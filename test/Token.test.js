@@ -6,6 +6,7 @@ describe("Token", function () {
   let owner;
   let marketingWallet;
   let liquidityWallet;
+  let publicSaleWallet;
   let user1;
   let user2;
   
@@ -14,15 +15,16 @@ describe("Token", function () {
   const TAX_AMOUNT_3_PERCENT = (amount) => (amount * BigInt(300)) / BigInt(10000);
 
   beforeEach(async function () {
-    [owner, marketingWallet, liquidityWallet, user1, user2] = await ethers.getSigners();
+    [owner, marketingWallet, liquidityWallet, publicSaleWallet, user1, user2] = await ethers.getSigners();
 
     const Token = await ethers.getContractFactory("Token");
     token = await Token.deploy(
-      "Simple Token",
-      "SIMPLE",
+      "Bird Token",
+      "BIRD",
       TOTAL_SUPPLY,
       marketingWallet.address,
-      liquidityWallet.address
+      liquidityWallet.address,
+      publicSaleWallet.address
     );
 
     await token.waitForDeployment();
@@ -30,12 +32,24 @@ describe("Token", function () {
 
   describe("Deployment", function () {
     it("Should set the right name and symbol", async function () {
-      expect(await token.name()).to.equal("Simple Token");
-      expect(await token.symbol()).to.equal("SIMPLE");
+      expect(await token.name()).to.equal("Bird Token");
+      expect(await token.symbol()).to.equal("BIRD");
     });
 
-    it("Should mint total supply to owner", async function () {
-      expect(await token.balanceOf(owner.address)).to.equal(TOTAL_SUPPLY);
+    it("Should automatically distribute tokens (30% treasury, 20% liquidity, 50% public sale)", async function () {
+      const treasuryBalance = await token.getTreasuryBalance();
+      const liquidityBalance = await token.balanceOf(liquidityWallet.address);
+      const publicSaleBalance = await token.balanceOf(publicSaleWallet.address);
+      const ownerBalance = await token.balanceOf(owner.address);
+      
+      // 30% to treasury
+      expect(treasuryBalance).to.equal((TOTAL_SUPPLY * BigInt(3000)) / BigInt(10000));
+      // 20% to liquidity wallet
+      expect(liquidityBalance).to.equal((TOTAL_SUPPLY * BigInt(2000)) / BigInt(10000));
+      // 50% to public sale wallet
+      expect(publicSaleBalance).to.equal(TOTAL_SUPPLY - treasuryBalance - liquidityBalance);
+      // Owner should have 0 (tokens distributed automatically)
+      expect(ownerBalance).to.equal(0);
     });
 
     it("Should set correct wallets", async function () {
@@ -56,13 +70,14 @@ describe("Token", function () {
     const transferAmount = ethers.parseUnits("1000", 18);
 
     it("Should transfer tokens without tax for excluded addresses", async function () {
-      await token.transfer(user1.address, transferAmount);
+      // Transfer from public sale wallet (which has tokens)
+      await token.connect(publicSaleWallet).transfer(user1.address, transferAmount);
       expect(await token.balanceOf(user1.address)).to.equal(transferAmount);
     });
 
     it("Should apply tax on regular transfers", async function () {
-      // First, transfer some tokens to user1 (no tax for owner)
-      await token.transfer(user1.address, transferAmount);
+      // First, transfer some tokens to user1 (no tax from public sale wallet)
+      await token.connect(publicSaleWallet).transfer(user1.address, transferAmount);
       
       // Now user1 transfers to user2 (tax applies)
       const taxAmount = TAX_AMOUNT_3_PERCENT(transferAmount);
@@ -75,8 +90,11 @@ describe("Token", function () {
     });
 
     it("Should distribute tax correctly", async function () {
+      // First, manually burn the initial treasury to start fresh
+      await token.manualBuybackAndBurn();
+      
       // Transfer tokens to user1 first
-      await token.transfer(user1.address, transferAmount);
+      await token.connect(publicSaleWallet).transfer(user1.address, transferAmount);
       
       const initialMarketingBalance = await token.balanceOf(marketingWallet.address);
       const initialLiquidityBalance = await token.balanceOf(liquidityWallet.address);
@@ -121,7 +139,7 @@ describe("Token", function () {
   describe("Buyback and Burn", function () {
     it("Should accumulate treasury from taxes", async function () {
       const transferAmount = ethers.parseUnits("10000", 18);
-      await token.transfer(user1.address, transferAmount);
+      await token.connect(publicSaleWallet).transfer(user1.address, transferAmount);
       
       // Make multiple transfers to accumulate treasury
       for (let i = 0; i < 10; i++) {
@@ -138,7 +156,7 @@ describe("Token", function () {
       // Transfer enough tokens to user1 to accumulate treasury
       // Need enough for transfers + taxes
       const largeAmount = ethers.parseUnits("5000000", 18); // 5 million tokens
-      await token.transfer(user1.address, largeAmount);
+      await token.connect(publicSaleWallet).transfer(user1.address, largeAmount);
       
       // Calculate how many transfers needed to reach threshold
       // Each transfer of 10000 tokens = 300 tokens tax (3%)
@@ -166,11 +184,10 @@ describe("Token", function () {
     });
 
     it("Should allow manual buyback", async function () {
-      // Accumulate some treasury
-      await token.transfer(user1.address, ethers.parseUnits("10000", 18));
-      await token.connect(user1).transfer(user2.address, ethers.parseUnits("1000", 18));
-      
+      // The initial treasury (3M tokens) already exists
       const treasuryBefore = await token.getTreasuryBalance();
+      expect(treasuryBefore).to.be.gt(0); // Should have initial treasury
+      
       const totalSupplyBefore = await token.totalSupply();
       
       await token.manualBuybackAndBurn();
@@ -216,11 +233,10 @@ describe("Token", function () {
     });
 
     it("Should allow owner to withdraw treasury", async function () {
-      // Accumulate treasury
-      await token.transfer(user1.address, ethers.parseUnits("10000", 18));
-      await token.connect(user1).transfer(user2.address, ethers.parseUnits("1000", 18));
-      
+      // The initial treasury (3M tokens) already exists
       const treasury = await token.getTreasuryBalance();
+      expect(treasury).to.be.gt(0); // Should have initial treasury
+      
       const ownerBalanceBefore = await token.balanceOf(owner.address);
       
       await token.withdrawTreasury(owner.address, treasury);
@@ -235,7 +251,8 @@ describe("Token", function () {
       const burnAmount = ethers.parseUnits("1000", 18);
       const totalSupplyBefore = await token.totalSupply();
       
-      await token.burn(burnAmount);
+      // Burn from public sale wallet (which has tokens)
+      await token.connect(publicSaleWallet).burn(burnAmount);
       
       expect(await token.totalSupply()).to.equal(totalSupplyBefore - burnAmount);
     });

@@ -8,8 +8,8 @@ async function main() {
   console.log("Account balance:", (await hre.ethers.provider.getBalance(deployer.address)).toString());
 
   // Get configuration from environment variables
-  const tokenName = process.env.TOKEN_NAME || "Simple Token";
-  const tokenSymbol = process.env.TOKEN_SYMBOL || "SIMPLE";
+  const tokenName = process.env.TOKEN_NAME || "Bird Token";
+  const tokenSymbol = process.env.TOKEN_SYMBOL || "BIRD";
   const totalSupply = process.env.TOTAL_SUPPLY 
     ? hre.ethers.parseUnits(process.env.TOTAL_SUPPLY, 18)
     : hre.ethers.parseUnits("10000000", 18); // 10 million default
@@ -17,6 +17,7 @@ async function main() {
   // Validate wallet addresses - use deployer if invalid
   let marketingWallet = process.env.MARKETING_WALLET || deployer.address;
   let liquidityWallet = process.env.LIQUIDITY_WALLET || deployer.address;
+  let publicSaleWallet = process.env.PUBLIC_SALE_WALLET || deployer.address;
   
   // Check if addresses are valid (start with 0x and are 42 chars)
   const isValidAddress = (addr) => {
@@ -32,6 +33,11 @@ async function main() {
     console.log("⚠️  Invalid liquidity wallet address, using deployer address");
     liquidityWallet = deployer.address;
   }
+  
+  if (!isValidAddress(publicSaleWallet)) {
+    console.log("⚠️  Invalid public sale wallet address, using deployer address");
+    publicSaleWallet = deployer.address;
+  }
 
   console.log("\nDeployment Configuration:");
   console.log("Token Name:", tokenName);
@@ -39,6 +45,7 @@ async function main() {
   console.log("Total Supply:", hre.ethers.formatUnits(totalSupply, 18));
   console.log("Marketing Wallet:", marketingWallet);
   console.log("Liquidity Wallet:", liquidityWallet);
+  console.log("Public Sale Wallet:", publicSaleWallet);
 
   // Deploy Token contract
   console.log("\nDeploying Token contract...");
@@ -48,7 +55,8 @@ async function main() {
     tokenSymbol,
     totalSupply,
     marketingWallet,
-    liquidityWallet
+    liquidityWallet,
+    publicSaleWallet
   );
 
   await token.waitForDeployment();
@@ -71,7 +79,8 @@ async function main() {
           tokenSymbol,
           totalSupply,
           marketingWallet,
-          liquidityWallet
+          liquidityWallet,
+          publicSaleWallet
         ],
       });
       console.log("Contract verified successfully!");
