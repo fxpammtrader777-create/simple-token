@@ -1,0 +1,38 @@
+{
+  "name": "simple-token",
+  "version": "1.0.0",
+  "description": "Simple profitable ERC-20 token with transaction taxes, buyback/burn, and transparent tokenomics",
+  "main": "index.js",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy:local": "hardhat run scripts/deploy.js --network hardhat",
+    "deploy:testnet": "hardhat run scripts/deploy.js --network mumbai",
+    "deploy:amoy": "hardhat run scripts/deploy.js --network amoy",
+    "deploy:mainnet": "hardhat run scripts/deploy.js --network polygon",
+    "verify": "hardhat verify --network"
+  },
+  "keywords": [
+    "blockchain",
+    "ethereum",
+    "polygon",
+    "defi",
+    "token",
+    "erc20"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.0",
+    "hardhat": "^2.26.0",
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.0",
+    "ethers": "^6.9.0",
+    "dotenv": "^16.3.1"
+  },
+  "type": "commonjs"
+}
